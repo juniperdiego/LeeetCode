@@ -1,0 +1,40 @@
+=========hit========================
+insert	hot	to next queue
+=========hot========================
+insert	dot	to next queue
+insert	lot	to next queue
+erase 	hot
+=========dot========================
+insert	lot	to next queue
+insert	dog	to next queue
+=========lot========================
+insert	dot	to next queue
+insert	log	to next queue
+erase 	dot
+erase 	lot
+=========dog========================
+insert	log	to next queue
+=========dot========================
+insert	dog	to next queue
+=========log========================
+insert	dog	to next queue
+=========lot========================
+insert	log	to next queue
+erase 	dog
+erase 	log
+map key :dog
+	map value:dot
+	map value:dot
+	map value:log
+map key :dot
+	map value:hot
+	map value:lot
+map key :hot
+	map value:hit
+map key :log
+	map value:lot
+	map value:dog
+	map value:lot
+map key :lot
+	map value:hot
+	map value:dot

@@ -1,0 +1,58 @@
+10	s:	cccccccaab
+5	p:	c*a*b
+
+10	s:	cccccccaab
+3	p:	a*b
+
+10	s:	cccccccaab
+1	p:	b
+
+9	s:	ccccccaab
+3	p:	a*b
+
+9	s:	ccccccaab
+1	p:	b
+
+8	s:	cccccaab
+3	p:	a*b
+
+8	s:	cccccaab
+1	p:	b
+
+7	s:	ccccaab
+3	p:	a*b
+
+7	s:	ccccaab
+1	p:	b
+
+6	s:	cccaab
+3	p:	a*b
+
+6	s:	cccaab
+1	p:	b
+
+5	s:	ccaab
+3	p:	a*b
+
+5	s:	ccaab
+1	p:	b
+
+4	s:	caab
+3	p:	a*b
+
+4	s:	caab
+1	p:	b
+
+3	s:	aab
+3	p:	a*b
+
+3	s:	aab
+1	p:	b
+
+2	s:	ab
+1	p:	b
+
+1	s:	b
+1	p:	b
+
+1
