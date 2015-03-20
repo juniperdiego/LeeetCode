@@ -43,6 +43,7 @@ void printVector(vector<string> array )
     cout << endl;
 }
 
+#if 0
 class Solution {
     private:
             vector<vector<string> >   m_res;
@@ -95,26 +96,105 @@ class Solution {
         }
 };
 
+#endif
 
-void isPalindrome(string s) 
-{
-    const int n = s.size();
-    bool p[n][n]; // whether s[i,j] is palindrome
-    fill_n(&p[0][0], n * n, false);
-    for (int j = 0; j < n; j++)
-        for (int i = 0; i <=j; i++)
-            p[i][j] = s[i] == s[j] && ((j - i < 2) || p[i + 1][j - 1]);
-}
 
+#if 1
+class Solution {
+    public:
+        vector<vector<string> > partition(string s) {
+            const int n = s.size();
+            bool p[n][n]; // whether s[i,j] is palindrome
+            fill_n(&p[0][0], n * n, false);
+            for (int i = n - 1; i >= 0; --i)
+                for (int j = i; j < n; ++j)
+                    p[i][j] = s[i] == s[j] && ((j - i < 2) || p[i + 1][j - 1]);
+
+
+            vector<vector<string> > sub_palins[n]; // sub palindromes of s[0,i]
+            for (int i = n - 1; i >= 0; --i) {
+                for (int j = i; j < n; ++j)
+                    if (p[i][j]) {
+                        const string palindrome = s.substr(i, j - i + 1);
+                        if (j + 1 < n) {
+                            for (int k = 0; k < sub_palins[j + 1].size(); k++) {
+                                vector<string> v = sub_palins[j+1][k];
+                                v.insert(v.begin(), palindrome);
+                                sub_palins[i].push_back(v);
+                            }
+                        } else {
+                            vector<string> v;
+                            v.push_back(palindrome);
+                            sub_palins[i].push_back(v);
+                        }
+                    }
+            }
+
+            for( int i = n -1; i >=0; i--)
+            {
+                cout << "sub_palins[" << i << "]:" << endl;
+                vector<vector<string> > strMatrix = sub_palins[i];
+                for(int j = 0; j < strMatrix.size(); j++)
+                {
+                    vector<string> strVec = strMatrix[j];
+                    for(int k = 0; k < strVec.size(); k++)
+                        cout << strVec[k] <<"\t";
+                    cout << endl;
+                }
+            }
+            return sub_palins[0];
+        }
+};
+#endif
+
+#if 0
+class Solution {
+    public:
+        vector<vector<string> > partition(string s) {
+            const int n = s.size();
+            bool p[n][n]; // 1. whether s[i,j] is palindrome 
+            fill_n(&p[0][0], n * n, false);
+            for (int i = n - 1; i >= 0; --i)
+                for (int j = i; j < n; ++j)
+                    p[i][j] = s[i] == s[j] && ((j - i < 2) || p[i + 1][j - 1]); //第一步DP的核心递推式
+            vector<vector<string> > sub_palins[n]; // 2. 要存下所有的结果，sub_palins[i]:sub palindromes of s[i, n-1]
+            for (int i = n - 1; i >= 0; --i) {
+                for (int j = i; j < n; ++j)
+                    if (p[i][j]) {//s[i,j] is palindrome
+                        const string palindrome = s.substr(i, j - i + 1);//substr(pos, len)
+                        if (j + 1 < n) {
+                            for (auto v : sub_palins[j + 1]) { //在sub_palins[j + 1]中元素加上palindrome，生成sub_palins[i]中的元素
+                                v.insert(v.begin(), palindrome);//第二步DP的核心递推式
+                                sub_palins[i].push_back(v);
+                            }
+                        } else {
+                            sub_palins[i].push_back(vector<string> { palindrome });//C++11大法好！
+                        }
+                    }
+            }
+
+            for( int i = n -1; i >=0; i--)
+            {
+                cout << "matrix[" << i << "]:" << endl;
+                vector<vector<string> > strMatrix = sub_palins[i];
+                for(int j = 0; j < strMatrix.size(); j++)
+                {
+                    vector<string> strVec = strMatrix[j];
+                    for(int k = 0; k < strVec.size(); k++)
+                        cout << strVec[k] <<"\t";
+                    cout << endl;
+                }
+            }
+
+            return sub_palins[0];
+        }
+};
+#endif
 
 int main()
 {
     vector<vector<string> > res;
     string s = "aabcc";
-
-    cout << endl;
-    isPalindrome2(s);
-    cout << endl;
 
     Solution sl;
     res = sl.partition(s);
@@ -128,31 +208,3 @@ int main()
 }
 
 
-class Solution {
-    public:
-        vector<vector<string> > partition(string s) {
-            const int n = s.size();
-            bool p[n][n]; // whether s[i,j] is palindrome
-            fill_n(&p[0][0], n * n, false);
-            for (int i = n - 1; i >= 0; --i)
-                for (int j = i; j < n; ++j)
-                    p[i][j] = s[i] == s[j] && ((j - i < 2) || p[i + 1][j - 1]);
-
-            vector<vector<string> > sub_palins[n]; // sub palindromes of s[0,i]
-            for (int i = n - 1; i >= 0; --i) {
-                for (int j = i; j < n; ++j)
-                    if (p[i][j]) {
-                        const string palindrome = s.substr(i, j - i + 1);
-                        if (j + 1 < n) {
-                            for (auto v : sub_palins[j + 1]) {
-                                v.insert(v.begin(), palindrome);
-                                sub_palins[i].push_back(v);
-                            }
-                        } else {
-                            sub_palins[i].push_back(vector<string> { palindrome });
-                        }
-                    }
-            }
-            return sub_palins[0];
-        }
-};
