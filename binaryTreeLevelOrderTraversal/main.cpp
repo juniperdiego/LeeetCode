@@ -67,7 +67,7 @@ class Solution {
                 q1.push(root);
                 res.push_back(vector<int> ());
             }
-               
+
             while(!q1.empty())
             {
                 TreeNode * p = q1.front();
@@ -112,7 +112,7 @@ int main()
     Solution sl;
     vector<vector<int> >res = sl.levelOrder(&node0);
 
-//    cout << res.size() << endl;
+    //    cout << res.size() << endl;
     for(int i = 0; i < res.size(); i++)
     {
         printVector(res[i]);
